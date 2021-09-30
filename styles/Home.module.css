@@ -1,8 +1,8 @@
 .mainHeading{
   text-align: center;
   padding:0px;
-  margin:0px 200px 0px 200px;
-  font-size:1rem;
+  margin:0px 300px 0px 300px;
+  font-size:1.5rem;
 }
 
 .header{
@@ -12,6 +12,10 @@
 }
 
 .search form button{
-  margin-left:5px;
-  padding:2px;
+  margin-left:10px;
+  padding:5px;
+}
+
+.search form input{
+  font-size:20px;
 }

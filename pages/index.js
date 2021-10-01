@@ -21,7 +21,7 @@ const handleSubmit = (e) =>{
         </div>
         <div className={styles.search}>
           <form onSubmit={handleSubmit}>
-            <input type="text" onChange={handleChange} value={searchedDish}/>
+            <input type="text" onChange={handleChange} placeholder="Dish name" value={searchedDish}/>
             <button type="submit">Search</button>
           </form>
         </div>

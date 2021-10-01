@@ -1,5 +1,16 @@
+import { useState } from 'react';
 import styles from '../styles/Home.module.css'
 export default function CookingApp(){
+const [searchedDish,setSearchedDish]=useState('');
+const [dish,setDish] = useState();
+const handleChange = (e) => {
+  setSearchedDish(e.target.value)
+}
+const handleSubmit = (e) =>{
+  e.preventDefault();
+  setDish(searchedDish);
+
+}
   return (
     <>
       <div className={styles.header}>
@@ -9,12 +20,13 @@ export default function CookingApp(){
           </h1>
         </div>
         <div className={styles.search}>
-          <form>
-            <input type="text"/>
+          <form onSubmit={handleSubmit}>
+            <input type="text" onChange={handleChange} value={searchedDish}/>
             <button type="submit">Search</button>
           </form>
         </div>
       </div>
+      <p>{dish}</p>
     </>
   )
 }

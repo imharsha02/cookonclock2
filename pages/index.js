@@ -1,37 +1,68 @@
-import Head from 'next/head'
-import { useState } from 'react';
-import styles from '../styles/Home.module.css'
-export default function CookingApp(){
-const [searchedDish,setSearchedDish]=useState('');
-const [dish,setDish] = useState();
-const handleChange = (e) => {
-  setSearchedDish(e.target.value)
-}
-const handleSubmit = (e) =>{
-  e.preventDefault();
-  setDish(searchedDish);
-
-}
+import Head from "next/head";
+import { useState } from "react";
+import Recipes from "../components/Recipies";
+import styles from "../styles/Home.module.css";
+import Link from "next/link";
+export default function CookingApp({ foodDish }) {
+  const [searchedDish, setSearchedDish] = useState("");
+  const [dish, setDish] = useState();
+  const handleChange = (e) => {
+    setSearchedDish(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setDish(searchedDish);
+  };
   return (
     <>
       <Head>
         <title>Ingredients Quantity</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossOrigin="anonymous"/>
+        <meta charSet="utf-8" />
       </Head>
       <div className={styles.header}>
-        <div  className={styles.mainHeading}>
-          <h1>
-            Ingredient Quantity
-          </h1>
-        </div>
-        <div className={styles.search}>
+        <h1>Ingredient Quantity</h1>
+        <div>
           <form onSubmit={handleSubmit}>
-            <input type="text" onChange={handleChange} placeholder="Dish name" value={searchedDish}/>
+            <input
+              type="text"
+              placeholder="Name of Dish"
+              onChange={handleChange}
+              value={searchedDish}
+            />
             <button type="submit">Search</button>
           </form>
         </div>
       </div>
-      <p>{dish}</p>
+
+      <div className={styles.body}>
+        <h2>
+          <Recipes recipe={foodDish.hits[1].label} />
+        </h2>
+        <Recipes
+          recipe={foodDish.hits[1].recipe.ingredientLines.map((ingredient) => {
+            return <p key={ingredient}>{ingredient}</p>;
+          })}
+        />
+        Click to go to procedure:{" "}
+        <Link href={`${foodDish.hits[0].recipe.url}`}>
+          <a target="_blank">{`${foodDish.hits[1].recipe.url}`}</a>
+        </Link>
+      </div>
     </>
-  )
+  );
+}
+
+export async function getStaticProps() {
+  const api_id = "67e0e669";
+  const api_key = "401c79fd1cbca14687587eea063de9ae";
+  const response = await fetch(
+    `https://api.edamam.com/search?app_id=${api_id}&app_key=${api_key}&q=chapati`
+  );
+  const data = await response.json();
+  console.log(data);
+  return {
+    props: {
+      foodDish: data,
+    },
+  };
 }

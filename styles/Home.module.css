@@ -1,22 +1,45 @@
-.mainHeading{
-  text-align: center;
-  padding:0px;
-  margin:0px 300px 0px 300px;
-  font-size:1.5rem;
-}
-
 .header{
-  display:flex;
-  align-items: center;
-  justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
 }
 
-.search form button{
-  margin-left:10px;
-  padding:5px;
+.header form{
+    padding-left:360px;
+    
 }
 
-.search form input{
-  font-size:20px;
-  text-align:center;
+.header h1{
+    padding-left: 870px;
+    font-size:40px;
+}
+
+.header form button{
+    margin-left:5px;
+    padding:3px;
+    border:1px solid black;
+    border-radius:5px;
+    font-size:16px;
+}
+
+
+.header form input{
+    text-align: center;
+    padding:3px;
+    border:1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.header form button:hover{
+    cursor: pointer;    
+}
+
+.body{
+    font-size:24px;
+    margin-left:100px;
+}
+.body h2{
+    text-align: center;
+
 }

@@ -20,7 +20,7 @@ export default function CookingApp({ foodDish }) {
         <meta charSet="utf-8" />
       </Head>
       <div className={styles.header}>
-        <h1>Ingredient Quantity</h1>
+        <h1>Cook on Clock</h1>
         <div>
           <form onSubmit={handleSubmit}>
             <input

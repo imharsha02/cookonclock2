@@ -1,9 +1,10 @@
 import Head from "next/head";
 import { useState } from "react";
-import Recipes from "../components/Recipies";
 import styles from "../styles/Home.module.css";
-import Link from "next/link";
-export default function CookingApp({ foodDish }) {
+
+export default function CookingApp() {
+const api_id = "67e0e669";
+const api_key = "401c79fd1cbca14687587eea063de9ae";
   const [searchedDish, setSearchedDish] = useState("");
   const [dish, setDish] = useState();
   const handleChange = (e) => {
@@ -13,6 +14,19 @@ export default function CookingApp({ foodDish }) {
     e.preventDefault();
     setDish(searchedDish);
   };
+
+  const fetchData=async () => {
+    let req = await fetch(`https://api.edamam.com/search?app_id=${api_id}&app_key=${api_key}&q=${dish}`);
+    let parsedRequest = await req.json();
+    let IngredientsList=parsedRequest.hits.map((recipe) => {
+      return (
+        recipe.ingredientLines
+      )
+    })
+  }
+
+  const result= fetchData();
+
   return (
     <>
       <Head>
@@ -33,36 +47,9 @@ export default function CookingApp({ foodDish }) {
           </form>
         </div>
       </div>
-
       <div className={styles.body}>
-        <h2>
-          <Recipes recipe={foodDish.hits[1].label} />
-        </h2>
-        <Recipes
-          recipe={foodDish.hits[1].recipe.ingredientLines.map((ingredient) => {
-            return <p key={ingredient}>{ingredient}</p>;
-          })}
-        />
-        Click to go to procedure:{" "}
-        <Link href={`${foodDish.hits[0].recipe.url}`}>
-          <a target="_blank">{`${foodDish.hits[1].recipe.url}`}</a>
-        </Link>
+        <p>{result}</p>
       </div>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const api_id = "67e0e669";
-  const api_key = "401c79fd1cbca14687587eea063de9ae";
-  const response = await fetch(
-    `https://api.edamam.com/search?app_id=${api_id}&app_key=${api_key}&q=chapati`
-  );
-  const data = await response.json();
-  console.log(data);
-  return {
-    props: {
-      foodDish: data,
-    },
-  };
 }

@@ -1,16 +1,16 @@
+
 .header{
     text-align: center;
     display: flex;
     align-items: center;
 }
 
-.header form{
-    padding-left:360px;
-    
-}
+ .header form{
+    margin-left: 350px;
+} 
 
 .header h1{
-    padding-left: 870px;
+    padding-left: 500px;
     font-size:40px;
 }
 
@@ -29,17 +29,4 @@
     border:1px solid black;
     border-radius: 5px;
     font-size: 16px;
-}
-
-.header form button:hover{
-    cursor: pointer;    
-}
-
-.body{
-    font-size:24px;
-    margin-left:100px;
-}
-.body h2{
-    text-align: center;
-
 }

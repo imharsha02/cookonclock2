@@ -1,5 +1,6 @@
 import styles from '../styles/MiniProject.module.css'
 import { useState } from 'react'
+import SignUp from '../components/SignUp';
 import { useRouter } from 'next/router';
 export default function CookOnClock() {
   const [input, setInput] = useState('');
@@ -27,6 +28,9 @@ export default function CookOnClock() {
           <input type="text" placeholder="Dish..." onChange={handleChange} value={input} />
           <input type="submit" value="Search" />
         </form>
+      </div>
+      <div className={styles.body}>
+        <SignUp />
       </div>
     </>
   )

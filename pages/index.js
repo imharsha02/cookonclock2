@@ -6,11 +6,11 @@ export default function SignUp() {
                 <h1>Cook on Clock</h1>
                 <form>
                     <label>
-                        Username:
+                        <b>Username:</b>
                         <input type="text" />
                     </label>
                     <label>
-                        Password:
+                        <b>Password:</b>
                         <input type="password" />
                     </label>
                 </form>

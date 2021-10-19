@@ -1,0 +1,18 @@
+.header{
+    display: flex;
+    align-items: center;
+    background-color: lightgray;
+}
+.header form{
+    margin-left: 100px;
+} 
+
+.header h1{
+    padding-left: 500px;
+    font-size:40px;
+}
+.header form label input{
+    text-align: center;
+    margin-left: 5px;
+    margin-right:5px;
+}

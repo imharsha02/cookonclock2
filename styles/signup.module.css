@@ -8,11 +8,41 @@
 } 
 
 .header h1{
-    padding-left: 500px;
+    padding-left: 450px;
     font-size:40px;
 }
 .header form label input{
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
+}
+.header form button{
+    padding:4px;
+    
+}
+.header form button:hover{
+    cursor:pointer;
+}
+.body{
+    text-align: center;
+    display:grid;
+
+}
+.body label{
+    font-weight: bold;
+    margin-top:10px;
+}
+.body button{
+    max-width: 100px;
+    text-align: center;
+    margin-left:700px;
+    margin-top:10px;
+}
+.body button:hover{
+    cursor:pointer;
+}
+.body input{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    border:1px solid black;
 }

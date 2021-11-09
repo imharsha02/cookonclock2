@@ -46,3 +46,12 @@
     text-align: center;
     border:1px solid black;
 }
+
+@media (min-width:500px) {
+    .body{
+        text-align: center;
+    }
+    .body button{
+        text-align: center;
+    }
+}

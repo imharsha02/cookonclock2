@@ -4,9 +4,8 @@ import react, {useState} from 'react'
 import {useRouter} from 'next/router'
 //Start of component below
 export default function SignUp() {
-    //Hooks
+    //State variables and hooks below
     const router = useRouter();
-    //State variables below
     const [userName,setUserName] = useState('');
     const [phoneNumber,setPhoneNumber] = useState();
     const [email,setEmail] = useState('');

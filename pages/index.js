@@ -1,10 +1,15 @@
 // Import statements below
+
 import styles from '../styles/signup.module.css'
 import react, {useState} from 'react'
 import {useRouter} from 'next/router'
+
 //Start of component below
+
 export default function SignUp() {
+
     //State variables and hooks below
+
     const router = useRouter();
     const [userName,setUserName] = useState('');
     const [phoneNumber,setPhoneNumber] = useState();
@@ -14,6 +19,7 @@ export default function SignUp() {
     const [storeSignupDetails,setStoreSignupDetails] = useState({});
 
     //Creating change handeling functions below
+
     function handleNameChange(e){
         setUserName(e.target.value)
     }
@@ -31,6 +37,7 @@ export default function SignUp() {
     }
 
     //Handling submit below
+
     function handleSubmit(e){
         e.preventDefault();
         let storedPassword='';
@@ -47,11 +54,14 @@ export default function SignUp() {
     }
 
     //Returning jsx below
+
     return (
         <>
             <div className={styles.header}>
                 <h1>Cook on Clock</h1>
+
                 {/*Sign in form below*/}
+
                 <form>
                     <label>
                         <b>Username:</b>
@@ -64,7 +74,9 @@ export default function SignUp() {
                     <button>Sign in</button>
                 </form>
             </div>
+            
             {/*Sign up form below*/}
+
             <form className={styles.body} onSubmit={handleSubmit}>
                 <label>
                     Name: <input type="text" value = {userName} onChange={handleNameChange}/>

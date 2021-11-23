@@ -27,6 +27,7 @@ export default function Home() {
           <input type="text" placeholder="Dish..." onChange={handleChange} value={input} />
           <input type="submit" value="Search" />
         </form>
+        <button className={styles.logoutButton}>Log out</button>
       </div>
     </>
   )

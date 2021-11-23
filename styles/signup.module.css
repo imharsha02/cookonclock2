@@ -47,6 +47,10 @@
     border:1px solid black;
 }
 
+.logoutButton{
+    float:left;
+}
+
 @media (min-width:500px) {
     .body{
         text-align: center;

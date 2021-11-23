@@ -1,7 +1,7 @@
 // Import statements below
 
 import styles from '../styles/signup.module.css'
-import react, {useState} from 'react'
+import {useState} from 'react'
 import {useRouter} from 'next/router'
 
 //Start of component below
@@ -43,7 +43,7 @@ export default function SignUp() {
         let storedPassword='';
         if(createPassword===confirmPassword){
             storedPassword=confirmPassword
-            router.push('/Home')
+            router.push('/api/newUser')
         }
         setStoreSignupDetails({
             personName:userName,

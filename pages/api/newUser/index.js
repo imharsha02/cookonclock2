@@ -16,10 +16,12 @@ export default async function handler (req, res) {
         }
       case 'POST':
           try {
+              console.log(req.Name)
               const note = await SignUp.create(req.body)
               res.status(201).json({success: true, data: note})
           }catch (error){
-            res.status(400).json({success: false})
+              console.error(error)
+            res.status(400).json({success: error})
           }
           break;
         // const { Name, PhoneNumber, EmailAddress, Password } = req.body;

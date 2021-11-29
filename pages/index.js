@@ -1,6 +1,5 @@
 // Import statements below
 
-import styles from '../styles/indexpageStyles.module.css'
 
 import {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
@@ -13,14 +12,14 @@ export default function SignUp() {
     //State variables and hooks below
 
     const router = useRouter();
-    const [form,setForm]= useState([{userName:'', phoneNumber:'', emailAddress:'', Password:'', confirmPassword:''},]);
+    const [form,setForm]= useState({userName:'', phoneNumber:'', emailAddress:'', Password:'', confirmPassword:''});
     const [issubmited,setIsSubmited]=useState(false); 
     const [errors,setErrors]=useState({})
 
     useEffect(()=>{
         if(issubmited){
             if(Object.keys(errors).length===0){
-                //addNewUser();
+                addNewUser();
                 alert("welcome user")
             }
             else{
@@ -29,6 +28,22 @@ export default function SignUp() {
         }
     },[errors])
 
+    const addNewUser = async () => {
+        try {
+            const res = await fetch('http://localhost:3000/api/newUser',{
+                method:'POST',
+                headers:{
+                    "Accept":"application/json",
+                    "Content-Type ":"application/json"
+                },
+                body:JSON.stringify(form)
+            })
+            router.push("/Home")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function handleSubmit(e){
         e.preventDefault();
         let errs = validate();
@@ -36,9 +51,9 @@ export default function SignUp() {
         setIsSubmited(true);
     }
     function handleChange(e){
-        setForm({
-            ...form, [e.target.name]:e.target.value,
-        })
+        setForm({...form, 
+[e.target.name]:e.target.value,
+       })
     }
     function validate(){
         let err = {}
@@ -70,7 +85,7 @@ export default function SignUp() {
             <h1>Sign up to cook on clock</h1>
             <div style={{"textAlign":"center"}}>
                 {
-                     issubmited?router.push("/Home"):<form style={{"display":"grid", }} onSubmit={handleSubmit}>
+                     !issubmited && <form style={{"display":"grid", }} onSubmit={handleSubmit}>
                          <label style={{"margin":"5px"}}>
                             userName: <input type="text" name="userName" onChange = {handleChange}/>
                          </label>
@@ -81,10 +96,11 @@ export default function SignUp() {
                              Email: <input type="email" name="emailAddress" onChange = {handleChange}/>
                          </label>
                          <label style={{"margin":"5px"}}>
-                             Password: <input type="password" name="loginPassword"  onChange = {handleChange}/>
+                             Password: <input type="password" name="Password"  onChange = {handleChange}/>
                          </label>
                          <label style={{"margin":"5px"}}>
                              Confirm password: <input type="password" name="confirmPassword" onChange = {handleChange}/>
+                             <p>{errors.confirmPassword}</p>
                          </label>
                          <button type="submit" style={{"maxWidth":"100px","padding":"10px", "marginLeft":"920px", "marginRight":"920px"}}>Sign UP</button>
                      </form>

@@ -18,8 +18,12 @@ export default async(req, res) => {
           try {
               const user = await SignUp.create(req.body)
               res.status(201).json({success: true, data: user})
+              console.log(req.Name)
+              const note = await SignUp.create(req.body)
+              res.status(201).json({success: true, data: note})
           }catch (error){
-            res.status(400).json({success: false})
+              console.error(error)
+            res.status(400).json({success: error})
           }
           break;
       default:

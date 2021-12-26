@@ -1,30 +1,66 @@
 import { withRouter } from "next/router";
 import {useState, useEffect} from 'react'
-import { Card, Icon, Image, Table, Header } from 'semantic-ui-react'
+import { Card, Icon, Image, Table, Header, Form, Message, Button } from 'semantic-ui-react'
+import RecipeCard from "../components/RecipeCard";
+import useForm from "../hooks/useForm";
 
+function validate (values) {
+    let nameRule = /^[a-z A-Z]([-']?[a-z A-Z]+)*( [a-z A-Z]([-']?[a-z A-Z]+)*)*$/
+    let errors = {}
+    if(!values.item) {
+        errors.item = "Enter an ingredient or food item to search for"
+    } else if (!nameRule.test(values.item)) {
+        errors.item = "item is invalid"
+    }
+    // if(!values.name) {
+    //     errors.name = "Name is required"
+    // }else if(!nameRule.test(values.name)) {
+    //     errors.name = "name can only contain letters"
+    // }
+    // if(values.phone && !
+    //     /^\d{10}$/.test(values.phone)) {
+    //         errors.phone = "phone number invalid"
+    // }
+    // if(!values.tAndC) {
+    //     errors.tAndC = "agree to Terms and Conditions to proceed"
+    // }
+    return errors
+}
 function RecipeList(props) {
+    
     const [res, setRes] = useState({});
     const [error, setError] = useState('');
+    const [searchState, setSearchState] = useState('toSearch')
     const getData = async() => {
-        fetch("https://api.edamam.com/api/recipes/v2?type=public&q=egg&app_id=67e0e669&app_key=401c79fd1cbca14687587eea063de9ae&ingr=1-8")
+        setSearchState('loading')
+        fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${values.item}&app_id=67e0e669&app_key=401c79fd1cbca14687587eea063de9ae&ingr=1-8`)
         .then((response)=> {
+            setSearchState('success')
             return response.json()
         }).then(data => {
             console.log(data)
             setRes(data)
         }).catch(error => {
+            setSearchState('error')
             setError(`${error}`)
         })       
     }
-    useEffect(() => {
-        getData()
-    }, [])
+    const {values, errors, handleSubmit, handleChange} = useForm(getData, validate)
+    console.log(errors.item)
     return (
         <>
-            {Object.keys(res).length == 0 ? (
+            <h1 className="text-4xl font-bold text-center p-12">Recipes</h1>
+            <div className="m-12">
+                <form onSubmit={handleSubmit} className="flex items-center justify-center space-x-4">
+                <input className={` px-4 py-2 w-80 border-2 rounded-md`} name="item" placeholder="pizza" value={values.item || ""} onChange={handleChange} ></input>
+                {errors.length>0 && <h4 className="text-red-600 text-sm">{errors.item}</h4>}
+                <button type="submit" className="bg-pink-200 p-2 hover:bg-pink-100 rounded-md">Go</button>
+                </form>
+            </div>
+            { searchState !== 'toSearch' &&
+            (Object.keys(res).length == 0 ? (
                 error == '' ? (
                     <>
-            <h1>{props.router.query.q}</h1>
             <p>loading please wait</p>
                 </>
                 ) : (
@@ -34,7 +70,7 @@ function RecipeList(props) {
                 <div>
                     {console.log(res)}
                     {res.hits&& res.hits.length>0 && (
-                        <div>
+                        <div className="flex flex-wrap space-x-8 space-y-8 p-20 justify-around">
                             {/* {res.hits.map(obj => <div>
                                 <h1>{obj.recipe.label}</h1>
                                 {obj.recipe.ingredients.map(ing => <div>
@@ -42,44 +78,12 @@ function RecipeList(props) {
                                     
                                 </div>)}
                             </div>)} */}
-                            {res.hits.map(obj => <Card>
-                                <Image src={obj.recipe.image} wrapped ui={false} />
-                                <Card.Content>
-                                <Card.Header>{obj.recipe.label}</Card.Header>
-                                <Card.Description>
-                                    <Table basic="very" celled collapsing>
-                                    <Table.Header>
-                                        <Table.Row>
-                                            <Table.HeaderCell>Ingredient</Table.HeaderCell>
-                                            <Table.HeaderCell>Quantity</Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Header>
-                                    <Table.Body>
-                                    
-                                        {obj.recipe.ingredients.map(ing => 
-                                         <Table.Row>
-                                                    <Table.Cell>
-                                                    <Header as='h4' image>
-                                                        <Image src={ing.image} rounded size='mini' />
-                                                        <Header.Content>
-                                                        {ing.food}
-                                                        {ing.measure && ing.measure != "<unit>" && <Header.Subheader>in {ing.measure}</Header.Subheader>}
-                                                        </Header.Content>
-                                                    </Header>
-                                                    </Table.Cell>
-                                                    <Table.Cell>{ing.quantity == 0 ? "as required" : ing.quantity}</Table.Cell>
-                                            </Table.Row>   
-                                        )}
-                                    </Table.Body>
-                                    </Table>
-                                </Card.Description>
-                                
-                                </Card.Content>
-                            </Card>)}
+                            {res.hits.map(obj => <div key={obj.recipe.url} className="w-96"><RecipeCard obj={obj} /> </div>)}
                         </div>
                     ) }
                 </div>
-            )}
+            ))
+                        }
         </>
     )
 }

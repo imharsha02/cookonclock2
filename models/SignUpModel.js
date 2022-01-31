@@ -1,23 +1,13 @@
 const mongoose = require('mongoose');
 const SignUpSchema = new mongoose.Schema({
-    Name:{
+    name:{
         type:String,
         required:[true,"Please enter a name"],
     },
-    PhoneNumber:{
+    count:{
         type:Number,
         required:true,
-        // maxlength:[10,"Number must be only contain 10 digits"]
-    },
-    EmailAddress:{
-        type: String,
-    required: true,
-    // match: /.+\@.+\..+/,
-    unique: true
-    },
-    Password:{
-        type:String,
-        required:true,
+        
     }
 })
 

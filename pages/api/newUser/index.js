@@ -15,14 +15,21 @@ export default async (req, res) => {
             break;
         }
         case 'POST':
-            try {
-                const note = await SignUp.create(req.body)
-                res.status(201).json({ success: true, data: note })
-            } catch (error) {
-                console.error(error)
-                res.status(400).json({ success: error })
-            }
-            break;
+          try {
+            const notes = await SignUp.find({})
+              let i = 0;
+              for(i= 0; i<notes.length; i++) {
+                  if(notes[i].name == req.body.name) {
+                      throw new Error ("user already exists ")
+                  }
+              }
+              const note = await SignUp.create(req.body)
+              res.status(201).json({success: true, data: note})
+          }catch (error){
+              console.error(error)
+            res.status(400).json({success: error})
+          }
+          break;
         case 'DELETE':
             try {
                 const deletedUser = await SignUp.remove();

@@ -17,7 +17,7 @@ export default async (req, res) => {
         case 'POST':
             try {
                 const modifiedObj= await SignUp.findOneAndUpdate({name:req.body.name}, {$inc: {count: 1}}, {new: true, upsert: true});
-
+                
                 res.status(201).json({ success: true, data: modifiedObj })
             } catch (error) {
                 console.error(error)

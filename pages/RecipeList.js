@@ -31,6 +31,7 @@ function RecipeList(props) {
     const [res, setRes] = useState({});
     const [error, setError] = useState('');
     const [searchState, setSearchState] = useState('toSearch')
+    const [mostSearched, setMostSearched] = useState([])
     const getData = async() => {
         setSearchState('loading')
         fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${values.item}&app_id=67e0e669&app_key=401c79fd1cbca14687587eea063de9ae&ingr=1-8`)
@@ -43,10 +44,26 @@ function RecipeList(props) {
         }).catch(error => {
             setSearchState('error')
             setError(`${error}`)
-        })       
+        })
+             
     }
     const {values, errors, handleSubmit, handleChange} = useForm(getData, validate)
     console.log(errors.item)
+
+    useEffect(() => {
+        if(res && values && values.item) {
+            fetch(`/api/newUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: JSON.stringify({name: values.item})
+            }).then(res => {
+                return res.json()
+            })
+        }
+    }, [res]) 
     return (
         <>
             <h1 className="text-4xl font-bold text-center p-12">Recipes</h1>

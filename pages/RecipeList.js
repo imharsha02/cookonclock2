@@ -64,6 +64,12 @@ function RecipeList(props) {
             })
         }
     }, [res]) 
+    useEffect((async() => {
+        await fetch('/api/newUser/most').then(res => res.json()).then(data => {
+            setMostSearched(data.data)
+        })
+    }), []) 
+    console.log(mostSearched)
     return (
         <>
             <h1 className="text-4xl font-bold text-center p-12">Recipes</h1>
@@ -73,6 +79,12 @@ function RecipeList(props) {
                 {errors.length>0 && <h4 className="text-red-600 text-sm">{errors.item}</h4>}
                 <button type="submit" className="bg-pink-200 p-2 hover:bg-pink-100 rounded-md">Go</button>
                 </form>
+            </div>
+            <div className="m-12 flex flex-wrap items-center justify-center">
+                commmon searches
+                {mostSearched && mostSearched.length> 0 && mostSearched.map(m => (
+                    <div className="bg-gray-100 p-4 rounded-full space-x-1.5 m-4" key={m._id}><span>{m.name}</span><span>(by {m.count} users)</span></div>
+                ))}
             </div>
             { searchState !== 'toSearch' &&
             (Object.keys(res).length == 0 ? (

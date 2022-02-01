@@ -4,6 +4,7 @@ function precise(x) {
     return Number.parseFloat(x).toPrecision(1);
   }
 export default function RecipeList({obj}) {
+    console.log(obj.recipe)
     const [need, setNeed] = useState(obj.recipe.yield) 
     return (
         <Card >
@@ -11,6 +12,7 @@ export default function RecipeList({obj}) {
             <Card.Content>
             <Card.Header>{obj.recipe.label}
             </Card.Header>
+            <a target="_blank" className="border-b border-blue-200 text-blue-600" href={obj.recipe.url}>View Recipe</a>
             <div className='flex'>
                 
 
@@ -33,6 +35,7 @@ export default function RecipeList({obj}) {
                         <Table.Row key={ing.foodId}>
                                 <Table.Cell>
                                 <Header as='h4' image>
+                                    
                                     <Image src={ing.image} rounded size='mini' />
                                     <Header.Content>
                                     {ing.food}

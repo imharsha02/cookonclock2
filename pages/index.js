@@ -1,6 +1,5 @@
 import { withRouter } from "next/router";
 import {useState, useEffect} from 'react'
-import { Card, Icon, Image, Table, Header, Form, Message, Button } from 'semantic-ui-react'
 import RecipeCard from "../components/RecipeCard";
 import useForm from "../hooks/useForm";
 
@@ -12,18 +11,6 @@ function validate (values) {
     } else if (!nameRule.test(values.item)) {
         errors.item = "item is invalid"
     }
-    // if(!values.name) {
-    //     errors.name = "Name is required"
-    // }else if(!nameRule.test(values.name)) {
-    //     errors.name = "name can only contain letters"
-    // }
-    // if(values.phone && !
-    //     /^\d{10}$/.test(values.phone)) {
-    //         errors.phone = "phone number invalid"
-    // }
-    // if(!values.tAndC) {
-    //     errors.tAndC = "agree to Terms and Conditions to proceed"
-    // }
     return errors
 }
 function RecipeList(props) {
@@ -72,7 +59,7 @@ function RecipeList(props) {
     console.log(mostSearched)
     return (
         <>
-            <h1 className="text-4xl font-bold text-center p-12">Recipes</h1>
+            <h1 className="text-6xl font-black text-center p-12">Cook on Clock: Online recipe app</h1>
             <div className="m-12">
                 <form onSubmit={handleSubmit} className="flex items-center justify-center space-x-4">
                 <input className={` px-4 py-2 w-80 border-2 rounded-md`} name="item" placeholder="pizza" value={values.item || ""} onChange={handleChange} ></input>
@@ -90,7 +77,7 @@ function RecipeList(props) {
             (Object.keys(res).length == 0 ? (
                 error == '' ? (
                     <>
-            <p>loading please wait</p>
+            <p className="text-center font-bold text-4xl">LOADING...</p>
                 </>
                 ) : (
                     <p>{error}</p>
@@ -100,13 +87,6 @@ function RecipeList(props) {
                     {console.log(res)}
                     {res.hits&& res.hits.length>0 && (
                         <div className="flex flex-wrap space-x-8 space-y-8 p-20 justify-around">
-                            {/* {res.hits.map(obj => <div>
-                                <h1>{obj.recipe.label}</h1>
-                                {obj.recipe.ingredients.map(ing => <div>
-                                    <h4>{ing.food}</h4>
-                                    
-                                </div>)}
-                            </div>)} */}
                             {res.hits.map(obj => <div key={obj.recipe.url} className="w-96"><RecipeCard obj={obj} /> </div>)}
                         </div>
                     ) }

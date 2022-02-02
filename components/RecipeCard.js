@@ -1,8 +1,6 @@
 import {useState, useEffect} from 'react'
 import { Card, Icon, Image, Table, Header, Button } from 'semantic-ui-react'
-function precise(x) {
-    return Number.parseFloat(x).toPrecision(1);
-  }
+
 export default function RecipeList({obj}) {
     console.log(obj.recipe)
     const [need, setNeed] = useState(obj.recipe.yield) 
@@ -43,7 +41,7 @@ export default function RecipeList({obj}) {
                                     </Header.Content>
                                 </Header>
                                 </Table.Cell>
-                                <Table.Cell>{ing.quantity == 0 ? "as required" : precise((ing.quantity * need) / obj.recipe.yield)}</Table.Cell>
+                                <Table.Cell>{ing.quantity == 0 ? "as required" : (ing.quantity * need) / obj.recipe.yield}</Table.Cell>
                         </Table.Row>   
                     )}
                 </Table.Body>

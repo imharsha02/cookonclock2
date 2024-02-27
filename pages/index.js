@@ -2,7 +2,11 @@ import { withRouter } from "next/router";
 import { useState, useEffect } from "react";
 import RecipeCard from "../components/RecipeCard";
 import useForm from "../hooks/useForm";
-import {Button} from '../components/ui/button'
+import { Button } from "../components/ui/button";
+import { TypographyH2 } from "../components/ui/typographyH2";
+import { TypographyH3 } from "../components/ui/TypographyH3";
+import { Input } from "../components/ui/input";
+import { TypographyH4 } from "../components/ui/typographyH4";
 
 function validate(values) {
   let nameRule = /^[a-z A-Z]([-']?[a-z A-Z]+)*( [a-z A-Z]([-']?[a-z A-Z]+)*)*$/;
@@ -14,7 +18,7 @@ function validate(values) {
   }
   return errors;
 }
-function RecipeList(props) {
+function RecipeList() {
   const [res, setRes] = useState({});
   const [error, setError] = useState("");
   const [searchState, setSearchState] = useState("toSearch");
@@ -70,41 +74,31 @@ function RecipeList(props) {
   }, []);
   console.log(mostSearched);
   return (
-    <>
-      <h1 className="text-6xl font-black text-center p-12">
-        Cook on Clock: Online recipe app
-      </h1>
-      <div className="m-12">
-        <form
-          onSubmit={handleSubmit}
-          className="flex items-center justify-center space-x-4"
-        >
-          <input
-            className="px-4 py-2 w-80 border-2 rounded-md"
-            name="item"
-            placeholder="pizza"
-            value={values.item || ""}
-            onChange={handleChange}
-          ></input>
-          {errors.item && (
-            <h4 className="text-red-600 text-sm">{errors.item}</h4>
-          )}
-          <button
-            type="submit"
-            className="bg-pink-200 p-2 hover:bg-pink-100 rounded-md"
-          >
-            Go
-          </button>
-        </form>
-      </div>
+    <div className="max-w-7xl mx-auto my-20 space-y-5">
+      <TypographyH2>Cook on Clock: Online recipe app</TypographyH2>
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-center justify-center space-x-4"
+      >
+        <Input
+          name="item"
+          placeholder="pizza"
+          value={values.item || ""}
+          onChange={handleChange}
+        />
+        <Button type="submit">Go</Button>
+      </form>
+        {errors.item && <TypographyH4>{errors.item}</TypographyH4>}
+
       {searchState !== "toSearch" &&
         (Object.keys(res).length == 0 ? (
           error == "" ? (
             <>
-              <p className="text-center font-bold text-4xl">LOADING...</p>
+              <TypographyH3>LOADING...</TypographyH3>
             </>
           ) : (
-            <p>{error}</p>
+            <TypographyH4>{error}</TypographyH4>
           )
         ) : (
           <div>
@@ -120,7 +114,7 @@ function RecipeList(props) {
             )}
           </div>
         ))}
-    </>
+    </div>
   );
 }
 

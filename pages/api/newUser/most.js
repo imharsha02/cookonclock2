@@ -2,7 +2,7 @@ import dbConnect from "../../../utils/dbConnect";
 import SignUp from '../../../models/SignUpModel'
 
 dbConnect()
-export default async (req, res) => {
+export default async function Most (req, res) {
     const { method } = req
     switch (method) {
         case 'GET': {
